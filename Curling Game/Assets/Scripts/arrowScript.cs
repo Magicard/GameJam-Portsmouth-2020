@@ -14,12 +14,12 @@ public class arrowScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButton(1))
         {
             if (Physics.Raycast(ray))
                 Instantiate(arrow, transform.position, transform.rotation);
-        }    
+        }    */
     }
 }

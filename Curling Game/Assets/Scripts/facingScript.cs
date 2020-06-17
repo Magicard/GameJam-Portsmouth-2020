@@ -31,22 +31,59 @@ public class facingScript : MonoBehaviour
         {
             //TopRightBehind
             anim.Play("Idle");
-           
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
+            if (Input.GetMouseButton(1))
+            {
+                broom.GetComponent<Animator>().Play("swipe");
+            }
+            else
+            {
+                broom.GetComponent<Animator>().Play("nofr");
+            }
+
         }
         else if(angle>=91 && angle<=180)
         {
-            //TopLeftBehind
-            anim.Play("IdleBl");
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
+                //TopLeftBehind
+                anim.Play("IdleBl");
+            if (Input.GetMouseButton(1))
+            {
+                broom.GetComponent<Animator>().Play("swipefl");
+            }
+            else
+            {
+                broom.GetComponent<Animator>().Play("no");
+            }
+
         }
         else if (angle <= 1 && angle >= -90)
         {
             //BottomRightFwrd
             anim.Play("IdleFwrd");
+            if(Input.GetMouseButton(1))
+            {
+                broom.GetComponent<Animator>().Play("swipe");
+            }
+            else
+            {
+                broom.GetComponent<Animator>().Play("nofr");
+            }
+
         }
+            
         else if (angle <= -90 && angle >= -180)
         {
             //BottomLeftFwrd
             anim.Play("IdleFl");
+            if (Input.GetMouseButton(1))
+            {
+                broom.GetComponent<Animator>().Play("swipefl");
+            }
+            else 
+            {
+                broom.GetComponent<Animator>().Play("no");
+            }
         }
     }
 }
