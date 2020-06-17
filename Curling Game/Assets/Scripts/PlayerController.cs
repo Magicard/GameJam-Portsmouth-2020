@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour {
     public Text killsDisplay;
+    public Text nameDisplay;
     public GameObject broom;
     public Canvas canvasRef;
+    public GameObject globalCanvas;
     public GameObject selfPrefab;
     public GameObject swinger;
     public GameObject swingStone;
@@ -23,6 +25,7 @@ public class PlayerController : NetworkBehaviour {
     float sin = 0;
     float cos = 0;
     public string myNetId;
+    public string customName = "thisiscustomname";
 
     [SyncVar]
     public Boolean hasBall = false;
@@ -37,7 +40,8 @@ public class PlayerController : NetworkBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        
+        nameDisplay.text = name;
+
         rb = gameObject.GetComponent<Rigidbody2D>();
        
         selfPrefab = gameObject;
@@ -55,10 +59,10 @@ public class PlayerController : NetworkBehaviour {
     // Update is called once per frame
     private void Update() {
 
-        
 
+        globalCanvas.transform.position = gameObject.transform.position;
         if (isLocalPlayer) {
-
+            
             CmdGetKills();
             Vector3 mouse_pos;
             Transform target = gameObject.transform; //Assign to the object you want to rotate
