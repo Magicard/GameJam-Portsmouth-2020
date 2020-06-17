@@ -6,6 +6,7 @@ public class facingScript : MonoBehaviour
 {
     public Camera cam;
     public Animator anim;
+    public GameObject broom;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,18 +29,23 @@ public class facingScript : MonoBehaviour
         Debug.Log(angle);
         if (angle>= 0 && angle<= 90)
         {
+            //TopRightBehind
             anim.Play("Idle");
+           
         }
         else if(angle>=91 && angle<=180)
         {
+            //TopLeftBehind
             anim.Play("IdleBl");
         }
         else if (angle <= 1 && angle >= -90)
         {
+            //BottomRightFwrd
             anim.Play("IdleFwrd");
         }
         else if (angle <= -90 && angle >= -180)
         {
+            //BottomLeftFwrd
             anim.Play("IdleFl");
         }
     }
