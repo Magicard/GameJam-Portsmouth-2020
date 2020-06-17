@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour {
     public Text killsDisplay;
+    public GameObject broom;
     public Canvas canvasRef;
     public GameObject selfPrefab;
     public GameObject swinger;
@@ -36,7 +37,9 @@ public class PlayerController : NetworkBehaviour {
     // Start is called before the first frame update
     void Start()
     {
+        
         rb = gameObject.GetComponent<Rigidbody2D>();
+       
         selfPrefab = gameObject;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
 
@@ -140,7 +143,10 @@ public class PlayerController : NetworkBehaviour {
 
             Vector3 currentPos = transform.position;
             Vector3 newPos = new Vector3(currentPos.x + (hspd * Time.deltaTime), currentPos.y + (vspd * Time.deltaTime), currentPos.y+ 0.5f);
-            transform.position = newPos;
+            if (!isDead) {
+                transform.position = newPos;
+            }
+            
 
              
 
@@ -168,6 +174,15 @@ public class PlayerController : NetworkBehaviour {
                 angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 
                 CmdYeet(angle);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Delete)) {
+            if (isServer) {
+                //CmdDie();
+                RpcDie();
+
+               
             }
         }
 
@@ -223,7 +238,10 @@ public class PlayerController : NetworkBehaviour {
             CmdAddKill();
         
     }
-
+    [Command]
+    public void CmdResetSpawn(Vector3 pos) {
+        gameObject.transform.position = pos;
+    }
     [Command]
     void CmdRespawn() {
         RpcRespawn();
@@ -258,7 +276,7 @@ public class PlayerController : NetworkBehaviour {
         ball.transform.rotation = Quaternion.Euler(new Vector3(0, 0, dir));
         ball.transform.position += ball.transform.right * 2f;
         //ball.GetComponent<Rigidbody2D>().velocity = ball.transform.right * 20f;
-        ball.GetComponent<Rigidbody2D>().AddForce(ball.transform.right * 20f, ForceMode2D.Impulse);
+        ball.GetComponent<Rigidbody2D>().AddForce(ball.transform.right * 2f, ForceMode2D.Impulse);
 
         
 
@@ -315,7 +333,9 @@ public class PlayerController : NetworkBehaviour {
 
     [ClientRpc]
     void RpcDie() {
+        isDead = true;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        broom.GetComponent<SpriteRenderer>().enabled = false;
         StartCoroutine(respawn());
     }
     [ClientRpc]
@@ -336,10 +356,15 @@ public class PlayerController : NetworkBehaviour {
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<NetworkTransform>().enabled = true;
         GetComponent<CircleCollider2D>().enabled = true;
+        broom.GetComponent<SpriteRenderer>().enabled = true;
     }
     [ClientRpc]
     void RpcGetKills() {
         killsDisplay.text = kills.ToString();
+    }
+    [ClientRpc]
+    public void RpcResetSpawn(Vector3 pos) {
+        gameObject.transform.position = pos;
     }
 
 

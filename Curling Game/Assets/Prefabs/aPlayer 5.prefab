@@ -209,6 +209,11 @@ PrefabInstance:
       propertyPath: canvasRef
       value: 
       objectReference: {fileID: 5450291634672982759}
+    - target: {fileID: 437035994445693222, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: broom
+      value: 
+      objectReference: {fileID: 6096309216086256904}
     - target: {fileID: 794593686562768440, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: sceneId
@@ -287,7 +292,17 @@ PrefabInstance:
     - target: {fileID: 6738301070509220528, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738301070509220528, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738301070509220528, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: m_Simulated
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fef7f798cfd44d45a69104c4e99b4cc, type: 3}
