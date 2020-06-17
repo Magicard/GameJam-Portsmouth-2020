@@ -7,6 +7,8 @@ public class GameManage : NetworkBehaviour
 {
     public GameObject ballPrefab;
     public GameObject playerPrefab;
+    public static Dictionary<string,PlayerController> players = new Dictionary<string, PlayerController>();
+
     // Start is called before the first frame update
     public override void OnStartServer() {
         base.OnStartServer();
@@ -19,6 +21,10 @@ public class GameManage : NetworkBehaviour
         
     }
 
+    public static void addPlayer(string _id, PlayerController _player) {
+        players.Add(_id, _player);
+    }
+
     IEnumerator spawnObj() {
         yield return new WaitForSeconds(2f);
         GameObject ball = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -27,10 +33,7 @@ public class GameManage : NetworkBehaviour
         //CmdSpawnObj();
     }
 
-    public void respawn(NetworkConnection conn) {
-
-        CmdRespawn(conn);
-    }
+    
 
     [Command]
     void CmdSpawnObj() {
@@ -38,13 +41,7 @@ public class GameManage : NetworkBehaviour
         StartCoroutine(spawnObj());
     }
 
-    void CmdRespawn(NetworkConnection conn) {
-        
-            GameObject player = Instantiate(playerPrefab, new Vector3(-2, -2, 0), Quaternion.identity);
-            player.GetComponent<PlayerController>().manager = gameObject.GetComponent<GameManage>();
-            NetworkServer.ReplacePlayerForConnection(conn, player);
-        
-    }
+    
 
    
 }
