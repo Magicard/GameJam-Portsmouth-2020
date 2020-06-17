@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Curling Game",
+"productVersion": "0.1",
+"dataUrl": "newWebGl.data.unityweb",
+"wasmCodeUrl": "newWebGl.wasm.code.unityweb",
+"wasmFrameworkUrl": "newWebGl.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.0f1"
+}

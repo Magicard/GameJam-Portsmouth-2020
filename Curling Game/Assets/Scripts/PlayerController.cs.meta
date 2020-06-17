@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 73c679468d5a70b40bb46f722cf2b6f9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - swinger: {instanceID: 0}
+  - cam: {fileID: 405122927472150608, guid: d5a287ed438f4a540ac322ebf7ac5f1b, type: 3}
+  - rb: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
