@@ -10,11 +10,11 @@ public class customNetworkManager : NetworkManager
     public GameManage GM;
     public override void OnServerAddPlayer(NetworkConnection conn) {
         Vector3 spawnPos = GameManage.spawnPoints[Random.Range(0,GameManage.spawnPoints.Count -1 )].position;
-        playerPrefab = players[characterSelect.spriteIndex2];
-                
+        playerPrefab = players[0];
+       
         GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+        player.GetComponent<PlayerController>().customName = nameScript.name;
         //player.GetComponent<PlayerController>().manager = GM;
-        
         //characterSelect nameList = list.GetComponent<characterSelect>();
         //player.GetComponent<SpriteRenderer>().sprite = yes[spriteCounter];
         NetworkServer.AddPlayerForConnection(conn, player);
