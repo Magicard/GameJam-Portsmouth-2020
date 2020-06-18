@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System.Linq;
+using UnityEngine.UI;
 
 public class GameManage : NetworkBehaviour
 {
@@ -22,14 +24,21 @@ public class GameManage : NetworkBehaviour
     void Update()
     {
         if (isServer) {
-            foreach(KeyValuePair<string,PlayerController> kv in players) {
-                if(kv.Value.kills == 1) {
-                    //resetSpawns();
-                    break;
+            foreach (KeyValuePair<string, PlayerController> kv in players) {
+                List<Text> tx = kv.Value.leaderBoard.GetComponent<leaderboardManager>().textList;
+                //leaderboardManager lb = kv.Value.leaderBoard.GetComponent<leaderboardManager>();
+                for (int i = 0; i < players.Count; i++) {
+                   // Text t = new Text();
+                   // tx.Add()
+                    tx[i].text = players.ElementAt(i).Value.IDName + " " + players.ElementAt(i).Value.kills.ToString();
 
                 }
+                kv.Value.RpcSetBoard(tx);
+
             }
         }
+            
+        
     }
 
     void resetSpawns() {
@@ -61,6 +70,8 @@ public class GameManage : NetworkBehaviour
 
         StartCoroutine(spawnObj());
     }
+
+    
 
     
 

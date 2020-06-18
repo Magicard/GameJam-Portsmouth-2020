@@ -18,8 +18,8 @@ public class leaderboardManager : MonoBehaviour
     void Update()
     {
         
-        for(int i = 0; i < GameManage.players.Count; i++) {
-            textList[i].text = GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
-        }
+        //for(int i = 0; i < GameManage.players.Count; i++) {
+        //    textList[i].text = GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+       // }
     }
 }

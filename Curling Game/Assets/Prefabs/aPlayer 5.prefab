@@ -1285,6 +1285,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3802252595355611423, guid: 7193b95d66cdc364b895333fefbb889b,
         type: 3}
+    - target: {fileID: 437035994445693222, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: leaderBoard
+      value: 
+      objectReference: {fileID: 1150293064181092216}
     - target: {fileID: 794593686562768440, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: sceneId

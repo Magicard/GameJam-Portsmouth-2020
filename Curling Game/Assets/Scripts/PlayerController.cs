@@ -18,6 +18,7 @@ public class PlayerController : NetworkBehaviour {
     public GameObject ballPrefab;
     public GameManage manager;
     public GameObject _gibSpload;
+    public leaderboardManager leaderBoard;
     public float weight = 5f;
     public float vspd = 0;
     public float hspd = 0;
@@ -219,6 +220,7 @@ public class PlayerController : NetworkBehaviour {
 
                     //enemy.GetComponent<PlayerController>().addKill();
 
+                    /*
                     if (hasBall) {
                         hasBall = false;
 
@@ -230,6 +232,7 @@ public class PlayerController : NetworkBehaviour {
 
                         NetworkServer.Spawn(ball);
                     }
+                    */
 
                     
 
@@ -250,9 +253,9 @@ public class PlayerController : NetworkBehaviour {
             }
 
             if (!hasBall && !isDead) {
-                CmdSetStone();
+                //CmdSetStone();
                 //hasBall = true;
-                CmdDestroyBall(collision.gameObject);
+                //CmdDestroyBall(collision.gameObject);
             }
                 
             
@@ -365,6 +368,7 @@ public class PlayerController : NetworkBehaviour {
     void CmdSetStone() {
 
         hasBall = true;
+        RpcSetStone();
         
 
     }
@@ -399,7 +403,7 @@ public class PlayerController : NetworkBehaviour {
         StartCoroutine(respawn());
     }
     [ClientRpc]
-    void RpcSetStoneVisible(bool visible) {
+    public void RpcSetStoneVisible(bool visible) {
         if (isLocalPlayer) {
             return;
         }
@@ -426,6 +430,18 @@ public class PlayerController : NetworkBehaviour {
     [ClientRpc]
     public void RpcResetSpawn(Vector3 pos) {
         gameObject.transform.position = pos;
+    }
+
+   
+
+    [ClientRpc]
+    public void RpcSetStone() {
+        hasBall = true;
+    }
+
+    [Client]
+    public void RpcSetBoard(List<Text> lb) {
+        leaderBoard.GetComponent<leaderboardManager>().textList = lb;
     }
 
 
