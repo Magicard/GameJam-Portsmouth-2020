@@ -7,6 +7,7 @@ public class facingScript : MonoBehaviour
     public Camera cam;
     public Animator anim;
     public GameObject broom;
+    public int spriteCounter = characterSelect.spriteIndex2;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class facingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Vector3 mouse_pos;
         Transform target = gameObject.transform; //Assign to the object you want to rotate
         Vector3 object_pos;
@@ -30,7 +32,28 @@ public class facingScript : MonoBehaviour
         if (angle>= 0 && angle<= 90)
         {
             //TopRightBehind
-            anim.Play("Idle");
+            switch(characterSelect.spriteIndex2)
+            {
+                case 0:
+                    anim.Play("Idle1");
+                    break;
+                case 1:
+                    anim.Play("Idle2");
+                    break;
+                case 2:
+                    anim.Play("Idle3");
+                    break;
+                case 3:
+                    anim.Play("Idle4");
+                    break;
+                case 4:
+                    anim.Play("Idle5");
+                    break;
+                case 5:
+                    anim.Play("Idle6");
+                    break;
+            }
+            
             broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z + 8f);
             if (Input.GetMouseButton(1))
             {
@@ -45,8 +68,28 @@ public class facingScript : MonoBehaviour
         else if(angle>=91 && angle<=180)
         {
             broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z + 8f);
-                //TopLeftBehind
-                anim.Play("IdleBl");
+            //TopLeftBehind
+            switch (characterSelect.spriteIndex2)
+            {
+                case 0:
+                    anim.Play("IdleBl1");
+                    break;
+                case 1:
+                    anim.Play("IdleBl2");
+                    break;
+                case 2:
+                    anim.Play("IdleBl3");
+                    break;
+                case 3:
+                    anim.Play("IdleBl4");
+                    break;
+                case 4:
+                    anim.Play("IdleBl5");
+                    break;
+                case 5:
+                    anim.Play("IdleBl6");
+                    break;
+            }
             if (Input.GetMouseButton(1))
             {
                 broom.GetComponent<Animator>().Play("swipefl");
@@ -61,8 +104,28 @@ public class facingScript : MonoBehaviour
         {
             broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z -1f);
             //BottomRightFwrd
-            anim.Play("IdleFwrd");
-            if(Input.GetMouseButton(1))
+            switch (characterSelect.spriteIndex2)
+            {
+                case 0:
+                    anim.Play("IdleFl1");
+                    break;
+                case 1:
+                    anim.Play("IdleFl2");
+                    break;
+                case 2:
+                    anim.Play("IdleFl3");
+                    break;
+                case 3:
+                    anim.Play("IdleFl4");
+                    break;
+                case 4:
+                    anim.Play("IdleFl5");
+                    break;
+                case 5:
+                    anim.Play("IdleFl16");
+                    break;
+            }
+            if (Input.GetMouseButton(1))
             {
                 broom.GetComponent<Animator>().Play("swipe");
             }
@@ -77,7 +140,27 @@ public class facingScript : MonoBehaviour
         {
             broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
             //BottomLeftFwrd
-            anim.Play("IdleFl");
+            switch (characterSelect.spriteIndex2)
+            {
+                case 0:
+                    anim.Play("IdleFwrd1");
+                    break;
+                case 1:
+                    anim.Play("IdleFwrd2");
+                    break;
+                case 2:
+                    anim.Play("IdleFwrd3");
+                    break;
+                case 3:
+                    anim.Play("IdleFwrd4");
+                    break;
+                case 4:
+                    anim.Play("IdleFwrd5");
+                    break;
+                case 5:
+                    anim.Play("IdleFwrd6");
+                    break;
+            }
             if (Input.GetMouseButton(1))
             {
                 broom.GetComponent<Animator>().Play("swipefl");

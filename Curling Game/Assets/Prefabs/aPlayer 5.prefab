@@ -1300,6 +1300,11 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1521187088491035979, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2843649146645795366, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: broom
