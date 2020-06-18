@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: e913113cad32cdc4f9b8e16126091c4f
   - enabled: 1
-    path: Assets/Scenes/Teo's Scene 2.unity
-    guid: c093b881384d1df40ae4fd5d52fa4ab2
+    path: Assets/Scenes/secret 1.unity
+    guid: 9a72f4e6324e430428e9a2cd655dd4ec
   - enabled: 1
     path: Assets/Scenes/CharacterSelect.unity
     guid: 4a72474b6c81f3749b8d90d3c70517cb
