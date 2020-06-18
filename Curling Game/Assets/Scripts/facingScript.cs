@@ -122,7 +122,7 @@ public class facingScript : MonoBehaviour
                     anim.Play("IdleFl5");
                     break;
                 case 5:
-                    anim.Play("IdleFl16");
+                    anim.Play("IdleFl6");
                     break;
             }
             if (Input.GetMouseButton(1))
