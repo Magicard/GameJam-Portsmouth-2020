@@ -25,15 +25,26 @@ public class GameManage : NetworkBehaviour
     {
         if (isServer) {
             foreach (KeyValuePair<string, PlayerController> kv in players) {
-                List<Text> tx = kv.Value.leaderBoard.GetComponent<leaderboardManager>().textList;
+
+                string s = "";
+                List<string> tx = new List<string>();
                 //leaderboardManager lb = kv.Value.leaderBoard.GetComponent<leaderboardManager>();
-                for (int i = 0; i < players.Count; i++) {
-                   // Text t = new Text();
-                   // tx.Add()
-                    tx[i].text = players.ElementAt(i).Value.IDName + " " + players.ElementAt(i).Value.kills.ToString();
+                for (int i = 0; i < GameManage.players.Count; i++) {
+                    // Text t = new Text();
+                    // tx.Add()
+                    tx.Add(GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString());
+                    //leaderBoard.textList[i].text = GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+                    s += GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+                    if (i == GameManage.players.Count - 1) {
+
+                    } else {
+                        s += ",";
+                    }
 
                 }
-                kv.Value.RpcSetBoard(tx);
+                //kv.Value.RpcSetBoard(s);
+
+                //kv.Value.CmdSetBoard();
 
             }
         }
