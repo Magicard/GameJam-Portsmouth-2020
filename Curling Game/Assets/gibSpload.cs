@@ -23,7 +23,7 @@ public class gibSpload : MonoBehaviour
             //Vector2 force = new Vector2(0.2f, UnityEngine.Random.Range(0, 360));
             o.GetComponent<Rigidbody2D>().gravityScale = 0;
             o.GetComponent<Rigidbody2D>().drag = 2f;
-            o.GetComponent<Rigidbody2D>().AddForce(new Vector3(UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360),0) *0.2f, ForceMode2D.Impulse);
+            o.GetComponent<Rigidbody2D>().AddForce(new Vector3(UnityEngine.Random.Range(-360, 360), UnityEngine.Random.Range(-360, 360),0) *0.02f, ForceMode2D.Impulse);
             
 
             

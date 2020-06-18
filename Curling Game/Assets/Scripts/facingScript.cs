@@ -31,7 +31,7 @@ public class facingScript : MonoBehaviour
         {
             //TopRightBehind
             anim.Play("Idle");
-            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z + 8f);
             if (Input.GetMouseButton(1))
             {
                 broom.GetComponent<Animator>().Play("swipe");
@@ -44,7 +44,7 @@ public class facingScript : MonoBehaviour
         }
         else if(angle>=91 && angle<=180)
         {
-            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z + 8f);
                 //TopLeftBehind
                 anim.Play("IdleBl");
             if (Input.GetMouseButton(1))
@@ -59,6 +59,7 @@ public class facingScript : MonoBehaviour
         }
         else if (angle <= 1 && angle >= -90)
         {
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z -1f);
             //BottomRightFwrd
             anim.Play("IdleFwrd");
             if(Input.GetMouseButton(1))
@@ -74,6 +75,7 @@ public class facingScript : MonoBehaviour
             
         else if (angle <= -90 && angle >= -180)
         {
+            broom.transform.position = new Vector3(broom.transform.position.x, broom.transform.position.y, transform.position.z - 1f);
             //BottomLeftFwrd
             anim.Play("IdleFl");
             if (Input.GetMouseButton(1))

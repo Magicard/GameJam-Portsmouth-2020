@@ -17,7 +17,7 @@ public class PlayerController : NetworkBehaviour {
     public Camera cam;
     public GameObject ballPrefab;
     public GameManage manager;
-    public gibSpload _gibSpload;
+    public GameObject _gibSpload;
     public float weight = 5f;
     public float vspd = 0;
     public float hspd = 0;
@@ -281,27 +281,8 @@ public class PlayerController : NetworkBehaviour {
     [Command]
     void CmdSpload() {
         
-        foreach(Sprite spr in _gibSpload.gibs) {
-            /*
-            GameObject o = new GameObject();
-            o.transform.position = gameObject.transform.position;
-            o.AddComponent<SpriteRenderer>();
-            o.GetComponent<SpriteRenderer>().sprite = spr;
-
-            o.AddComponent<Rigidbody2D>();
-            float rx = UnityEngine.Random.Range(-5,5);
-            float ry = UnityEngine.Random.Range(-5,5);
-            Vector2 force = new Vector2(0.2f, UnityEngine.Random.Range(0, 360));
-            o.GetComponent<Rigidbody2D>().gravityScale = 0;
-            o.GetComponent<Rigidbody2D>().drag = 2f;
-            o.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
-            
-
-            NetworkServer.Spawn(o);
-            */
-            
-        }
-        GameObject o = Instantiate(_gibSpload.gameObject, transform.position, Quaternion.identity);
+        
+        GameObject o = Instantiate(_gibSpload, transform.position, Quaternion.identity);
         NetworkServer.Spawn(o);
 
     }
