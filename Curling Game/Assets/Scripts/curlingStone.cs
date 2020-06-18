@@ -43,6 +43,7 @@ public class curlingStone : NetworkBehaviour {
 
                     GameManage.players[collision.gameObject.GetComponent<PlayerController>().IDName].RpcDie();
                     GameManage.players[owner.GetComponent<PlayerController>().IDName].kills++;
+                    GameManage.sendboard();
 
                 }
 

@@ -21,9 +21,11 @@ public class GameManage : NetworkBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
+        /*
         if (isServer) {
+            /*
             foreach (KeyValuePair<string, PlayerController> kv in players) {
 
                 string s = "";
@@ -48,18 +50,42 @@ public class GameManage : NetworkBehaviour
 
             }
         }
-            
+            */
         
-    }
 
-    void resetSpawns() {
         foreach (KeyValuePair<string, PlayerController> kv in players) {
-            kv.Value.RpcResetSpawn(new Vector3(0,0,0));
+
+            if(kv.Value.kills > 9) {
+                foreach (KeyValuePair<string, PlayerController> kvs in players) {
+                    kvs.Value.RpcResetSpawn(new Vector3(0,0,0), kv.Value.customName +" wins");
+                }
+                resetGame();
+            }
+        }
+
+
+    }
+    public static void  sendboard() {
+        string s = "";
+        foreach (KeyValuePair<string, PlayerController> kvs in players) {
+            s += kvs.Value.customName + " " + kvs.Value.kills.ToString() + ",";
+
+        }
+
+        foreach (KeyValuePair<string, PlayerController> kvs in players) {
+            kvs.Value.RpcGetString(s);
+
+        }
+    }
+    void resetGame() {
+        foreach (KeyValuePair<string, PlayerController> kv in players) {
+            kv.Value.kills = 0;
         }
     }
 
     public static void addPlayer(string _id, PlayerController _player) {
         players.Add(_id, _player);
+        GameManage.sendboard();
     }
 
     public static void addSpawn(Transform trans) {
