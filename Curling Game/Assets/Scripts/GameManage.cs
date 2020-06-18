@@ -13,9 +13,16 @@ public class GameManage : NetworkBehaviour
     public static Dictionary<string,PlayerController> players = new Dictionary<string, PlayerController>();
     public static  List<Transform> spawnPoints = new List<Transform>();
 
+    public  static GameObject gibSpload;
+    public   GameObject _gibSpload;
+
 
     // Start is called before the first frame update
+    private void Awake() {
+        gibSpload = _gibSpload;
+    }
     public override void OnStartServer() {
+        
         base.OnStartServer();
         if (isServer) {
             StartCoroutine(spawnObj());
@@ -67,6 +74,11 @@ public class GameManage : NetworkBehaviour
         }
 
 
+    }
+
+    public static void spawnGibs(Vector3 pos) {
+        GameObject o = Instantiate(gibSpload, pos, Quaternion.identity);
+        NetworkServer.Spawn(o);
     }
     public static void  sendboard() {
         string s = "";
