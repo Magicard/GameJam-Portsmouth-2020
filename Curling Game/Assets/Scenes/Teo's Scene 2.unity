@@ -2375,6 +2375,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 730211024239435185, guid: 37b7d13b3b6bb7148b3e90bd51186835,
+        type: 3}
+      propertyPath: isShot
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7872544963662197314, guid: 37b7d13b3b6bb7148b3e90bd51186835,
         type: 3}
       propertyPath: sceneId
@@ -3404,18 +3409,48 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
---- !u!114 &839039320 stripped
+--- !u!114 &839039320
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7027779245887342219, guid: 54be48431db07e842bbd524a7c94db32,
-    type: 3}
-  m_PrefabInstance: {fileID: 8580020720647796455}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839039318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f039183eda8945448b822a77e2a9d0e, type: 3}
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnClientConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  port: 7777
+  NoDelay: 1
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
 --- !u!114 &839039322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9455,7 +9490,6 @@ PrefabInstance:
     - {fileID: 7027779245887342216, guid: 54be48431db07e842bbd524a7c94db32, type: 3}
     - {fileID: 7027779245887342229, guid: 54be48431db07e842bbd524a7c94db32, type: 3}
     - {fileID: 839039324, guid: 54be48431db07e842bbd524a7c94db32, type: 3}
-    - {fileID: 7027779245887342218, guid: 54be48431db07e842bbd524a7c94db32, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 54be48431db07e842bbd524a7c94db32, type: 3}
 --- !u!1001 &8731492659256512038
 PrefabInstance:

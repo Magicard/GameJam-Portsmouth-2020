@@ -19,7 +19,7 @@ public class leaderboardManager : MonoBehaviour
     {
         
         for(int i = 0; i < GameManage.players.Count; i++) {
-            textList[i].text = GameManage.players.ElementAt(i).Value.gameObject.name + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+            textList[i].text = GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
         }
     }
 }

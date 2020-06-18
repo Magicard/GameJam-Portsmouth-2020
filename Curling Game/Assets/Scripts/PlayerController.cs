@@ -34,6 +34,8 @@ public class PlayerController : NetworkBehaviour {
     public Boolean isDead = false;
     [SyncVar]
     public int kills = 0;
+    [SyncVar]
+    public string IDName;
 
 
 
@@ -54,8 +56,18 @@ public class PlayerController : NetworkBehaviour {
         string _id = gameObject.GetComponent<NetworkIdentity>().netId.ToString();
         name = "player" + _id;
         myNetId = name;
+        IDName = "player" + _id;
+    }
 
-        GameManage.addPlayer(name, this);
+    public override void OnStartServer() {
+        base.OnStartServer();
+        string _id = gameObject.GetComponent<NetworkIdentity>().netId.ToString();
+        name = "player" + _id;
+        myNetId = name;
+        IDName = "player" + _id;
+        //CmdSetIDName(IDName);
+
+        GameManage.addPlayer(IDName, this);
     }
     // Update is called once per frame
     private void Update() {
@@ -63,8 +75,9 @@ public class PlayerController : NetworkBehaviour {
 
         
         if (isLocalPlayer) {
+            killsDisplay.text = kills.ToString();
             globalCanvas.transform.position = gameObject.transform.position;
-            CmdGetKills();
+            //CmdGetKills();
             Vector3 mouse_pos;
             Transform target = gameObject.transform; //Assign to the object you want to rotate
             Vector3 object_pos;
@@ -87,17 +100,7 @@ public class PlayerController : NetworkBehaviour {
             
                 
                 swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
-                CmdSetStoneVisible(hasBall);
-            
-            
-
-
-
-
-            //swinger.transform.RotateAround(transform.position, swinger.transform.right, angle);
-
-
-
+          
 
             float spd = 10f;
 
@@ -170,7 +173,7 @@ public class PlayerController : NetworkBehaviour {
 
         if (Input.GetMouseButtonDown(0)) {
 
-            if (hasBall) {
+            if (hasBall && !isDead) {
                 Vector3 mouse_pos;
                 Transform target = gameObject.transform; //Assign to the object you want to rotate
                 Vector3 object_pos;
@@ -204,56 +207,49 @@ public class PlayerController : NetworkBehaviour {
             Debug.Log("should pick up stone");
 
             if (collision.gameObject.GetComponent<curlingStone>().isShot) {
+                Debug.Log(collision.gameObject.GetComponent<curlingStone>().isShot);
                 if (collision.gameObject.GetComponent<curlingStone>().owner != null) {
+                    /*
                     if (isServer) {
                         GameObject enemy = collision.gameObject.GetComponent<curlingStone>().owner;
-                        string enemyID = enemy.name;
+                        string enemyID = enemy.GetComponent<PlayerController>().IDName;
                         GameManage.players[enemyID].kills += 1;
                     }
-                    
+                    */
+
                     //enemy.GetComponent<PlayerController>().addKill();
-                }
-                if (isServer) {
-                    //CmdDie();
 
                     if (hasBall) {
                         hasBall = false;
-                        
 
                         GameObject ball = Instantiate(ballPrefab, transform.position, Quaternion.identity);
                         curlingStone stone = ball.GetComponent<curlingStone>();
 
-                        
-                        
-
-
-
                         stone.owner = null;
                         stone.isShot = false;
 
-
                         NetworkServer.Spawn(ball);
-                        
-                        
                     }
 
-                    swingStone.GetComponent<SpriteRenderer>().enabled = false;
-                    CmdSpload();
-                    RpcDie();
-                    return;
+                    
 
-
-                   
                 }
                 
-                    
-                    
+                    /*
+                    Debug.Log("Should Die");
+                    swingStone.GetComponent<SpriteRenderer>().enabled = false;
+                    CmdSpload();
+                    CmdDie();
+
+                    return;
+                    */
                 
                 
-               
+
+
             }
 
-            if (!hasBall) {
+            if (!hasBall && !isDead) {
                 CmdSetStone();
                 //hasBall = true;
                 CmdDestroyBall(collision.gameObject);
@@ -292,6 +288,10 @@ public class PlayerController : NetworkBehaviour {
     }
     [Command]
     void CmdRespawn() {
+        isDead = false;
+        swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
+        transform.position = new Vector3(-2, -2, 0);
+        broom.GetComponent<SpriteRenderer>().enabled = true;
         RpcRespawn();
         /*
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
@@ -312,6 +312,10 @@ public class PlayerController : NetworkBehaviour {
         */
         
 
+    }
+    [Command]
+    void CmdSetIDName(string n) {
+        IDName = n;
     }
     [Command]
     void CmdYeet(float dir) {
@@ -338,7 +342,11 @@ public class PlayerController : NetworkBehaviour {
     }
     [Command]
     void CmdDie() {
+        isDead = true;
+
+        swingStone.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        broom.GetComponent<SpriteRenderer>().enabled = false;
         isDead = true;
 
         RpcDie();
@@ -380,9 +388,10 @@ public class PlayerController : NetworkBehaviour {
     }
 
     [ClientRpc]
-    void RpcDie() {
+    public void RpcDie() {
         //
         isDead = true;
+        hasBall = false;
 
         swingStone.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -398,6 +407,7 @@ public class PlayerController : NetworkBehaviour {
     }
     [ClientRpc]
     void RpcRespawn() {
+        isDead = false;
         hasBall = false;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
         transform.position = new Vector3(-2, -2, 0);
