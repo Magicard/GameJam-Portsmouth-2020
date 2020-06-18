@@ -17,7 +17,10 @@ public class GameManage : NetworkBehaviour
     // Start is called before the first frame update
     public override void OnStartServer() {
         base.OnStartServer();
-        //StartCoroutine(spawnObj());
+        if (isServer) {
+            StartCoroutine(spawnObj());
+        }
+       
     }
 
     // Update is called once per frame
@@ -93,8 +96,8 @@ public class GameManage : NetworkBehaviour
     }
 
     IEnumerator spawnObj() {
-        yield return new WaitForSeconds(2f);
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        yield return new WaitForSeconds(5f);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(2, 0, 0), Quaternion.identity);
         NetworkServer.Spawn(ball);
         StartCoroutine(spawnObj());
         //CmdSpawnObj();
