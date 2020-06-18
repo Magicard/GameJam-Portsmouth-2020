@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,8 @@ public class PlayerController : NetworkBehaviour {
     public int kills = 0;
     [SyncVar]
     public string IDName;
+   
+    
 
 
 
@@ -76,6 +79,7 @@ public class PlayerController : NetworkBehaviour {
 
         
         if (isLocalPlayer) {
+            
             killsDisplay.text = kills.ToString();
             globalCanvas.transform.position = gameObject.transform.position;
             //CmdGetKills();
@@ -261,6 +265,37 @@ public class PlayerController : NetworkBehaviour {
         IDName = n;
     }
     [Command]
+    public void CmdSetBoard() {
+        foreach (KeyValuePair<string, PlayerController> kv in GameManage.players) {
+
+            string s = "";
+            List<string> tx = new List<string>();
+            //leaderboardManager lb = kv.Value.leaderBoard.GetComponent<leaderboardManager>();
+            for (int i = 0; i < GameManage.players.Count; i++) {
+                // Text t = new Text();
+                // tx.Add()
+                tx.Add(GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString());
+                //leaderBoard.textList[i].text = GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+                s += GameManage.players.ElementAt(i).Value.IDName + " " + GameManage.players.ElementAt(i).Value.kills.ToString();
+                if (i == GameManage.players.Count - 1) {
+
+                } else {
+                    s += ",";
+                }
+
+            }
+            Debug.Log(s);
+            List<string> lst = s.Split(',').ToList<String>();
+            for (int i = 0; i < lst.Count; i++) {
+                leaderBoard.textList[i].text = lst[i];
+            }
+            //kv.Value.RpcSetBoard(s);
+
+            //kv.Value.CmdSetBoard();
+            RpcSetBoard(s);
+        }
+    }
+    [Command]
     void CmdYeet(float dir) {
         hasBall = false;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
@@ -330,6 +365,10 @@ public class PlayerController : NetworkBehaviour {
         //Debug.Log(gameObject.name.ToString() + " was killed by " + enemy.name.ToString());
         kills += 1;
     }
+    [Command]
+    void CmdGetScores() {
+
+    }
 
     [ClientRpc]
     public void RpcDie() {
@@ -354,7 +393,7 @@ public class PlayerController : NetworkBehaviour {
         isDead = false;
         hasBall = false;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
-        transform.position = new Vector3(-2, -2, 0);
+        
         GetComponent<PlayerController>().enabled = true;
         GetComponent<PlayerController>().cam.enabled = true;
         GetComponent<PlayerController>().isDead = false;
@@ -379,10 +418,20 @@ public class PlayerController : NetworkBehaviour {
         hasBall = true;
     }
 
-    [Client]
-    public void RpcSetBoard(List<Text> lb) {
-        leaderBoard.GetComponent<leaderboardManager>().textList = lb;
+    
+
+    
+
+    
+
+    [ClientRpc]
+    public void RpcSetBoard(string str) {
+        List<string> lst =  str.Split(',').ToList<String>();
+        for (int i = 0; i < lst.Count; i++) {
+            leaderBoard.textList[i].text = lst[i];
+        }
     }
+
 
 
 }

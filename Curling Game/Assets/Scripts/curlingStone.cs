@@ -30,28 +30,33 @@ public class curlingStone : NetworkBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (isServer) {
-            if (isShot && collision.gameObject.tag == "playerobj") {
-                Debug.Log("kill" + collision.gameObject.name.ToString());
+            if(collision.gameObject.tag == "playerobj") {
+                if (isShot) {
+                    Debug.Log("kill" + collision.gameObject.name.ToString());
 
-                collision.gameObject.GetComponent<PlayerController>().isDead = true;
-                collision.gameObject.GetComponent<PlayerController>().hasBall = false;
+                    collision.gameObject.GetComponent<PlayerController>().isDead = true;
+                    collision.gameObject.GetComponent<PlayerController>().hasBall = false;
+                    collision.gameObject.transform.position = new Vector3(-2, -2, 0); //hmm
+                    collision.gameObject.GetComponent<PlayerController>().swingStone.GetComponent<SpriteRenderer>().enabled = false;
+                    collision.gameObject.GetComponent<PlayerController>().gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                    collision.gameObject.GetComponent<PlayerController>().broom.GetComponent<SpriteRenderer>().enabled = false;
 
-                collision.gameObject.GetComponent<PlayerController>().swingStone.GetComponent<SpriteRenderer>().enabled = false;
-                collision.gameObject.GetComponent<PlayerController>().gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                collision.gameObject.GetComponent<PlayerController>().broom.GetComponent<SpriteRenderer>().enabled = false;
+                    GameManage.players[collision.gameObject.GetComponent<PlayerController>().IDName].RpcDie();
+                    GameManage.players[owner.GetComponent<PlayerController>().IDName].kills++;
 
-                GameManage.players[collision.gameObject.GetComponent<PlayerController>().IDName].RpcDie();
-                GameManage.players[owner.GetComponent<PlayerController>().IDName].kills++;
+                }
 
+                if (!collision.gameObject.GetComponent<PlayerController>().hasBall && !collision.gameObject.GetComponent<PlayerController>().isDead && collision.gameObject.tag == "playerobj" && !isShot) {
+                    collision.gameObject.GetComponent<PlayerController>().hasBall = true;
+                    collision.gameObject.GetComponent<PlayerController>().RpcSetStone();
+                    collision.gameObject.GetComponent<PlayerController>().RpcSetStoneVisible(true);
+                    NetworkServer.Destroy(gameObject);
+                }
             }
+            
         }
 
-        if (!collision.gameObject.GetComponent<PlayerController>().hasBall && !collision.gameObject.GetComponent<PlayerController>().isDead && collision.gameObject.tag == "playerobj" && !isShot) {
-            collision.gameObject.GetComponent<PlayerController>().hasBall = true;
-            collision.gameObject.GetComponent<PlayerController>().RpcSetStone();
-            collision.gameObject.GetComponent<PlayerController>().RpcSetStoneVisible(true);
-            NetworkServer.Destroy(gameObject);
-        }
+        
     }
 
     [Command]
