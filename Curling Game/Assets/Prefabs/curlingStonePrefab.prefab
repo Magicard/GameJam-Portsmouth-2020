@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1532649471777452105}
   - component: {fileID: 5094424408841578446}
   - component: {fileID: 8225770236956221370}
+  - component: {fileID: -791504698168943424}
   m_Layer: 0
   m_Name: curlingStonePrefab
   m_TagString: curlingStone
@@ -173,3 +174,16 @@ MonoBehaviour:
   syncInterval: 0.1
   owner: {fileID: 0}
   isShot: 0
+--- !u!114 &-791504698168943424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625051116760112876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455bb1511be47e641aa707f6c0d8dcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offSet: 0
