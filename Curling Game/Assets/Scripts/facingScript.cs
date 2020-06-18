@@ -26,7 +26,7 @@ public class facingScript : MonoBehaviour
         mouse_pos.y = mouse_pos.y - object_pos.y;
         float angle;
         angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
+        
         if (angle>= 0 && angle<= 90)
         {
             //TopRightBehind

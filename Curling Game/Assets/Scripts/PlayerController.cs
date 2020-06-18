@@ -2,16 +2,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour {
+    public Text killsDisplay;
+    public Text nameDisplay;
+    public GameObject broom;
+    public Canvas canvasRef;
+    public GameObject globalCanvas;
     public GameObject selfPrefab;
     public GameObject swinger;
     public GameObject swingStone;
     public Camera cam;
     public GameObject ballPrefab;
     public GameManage manager;
+    public gibSpload _gibSpload;
     public float weight = 5f;
     public float vspd = 0;
     public float hspd = 0;
@@ -19,30 +25,46 @@ public class PlayerController : NetworkBehaviour {
     float maxVel = 7f;
     float sin = 0;
     float cos = 0;
+    public string myNetId;
+    public string customName = "thisiscustomname";
 
     [SyncVar]
     public Boolean hasBall = false;
     [SyncVar]
     public Boolean isDead = false;
+    [SyncVar]
+    public int kills = 0;
+
 
 
     public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
+        nameDisplay.text = name;
+
         rb = gameObject.GetComponent<Rigidbody2D>();
+       
         selfPrefab = gameObject;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
 
     }
+    public override void OnStartClient() {
+        base.OnStartClient();
+        string _id = gameObject.GetComponent<NetworkIdentity>().netId.ToString();
+        name = "player" + _id;
+        myNetId = name;
 
+        GameManage.addPlayer(name, this);
+    }
     // Update is called once per frame
     private void Update() {
 
-        
 
+        
         if (isLocalPlayer) {
-            
+            globalCanvas.transform.position = gameObject.transform.position;
+            CmdGetKills();
             Vector3 mouse_pos;
             Transform target = gameObject.transform; //Assign to the object you want to rotate
             Vector3 object_pos;
@@ -126,7 +148,10 @@ public class PlayerController : NetworkBehaviour {
 
             Vector3 currentPos = transform.position;
             Vector3 newPos = new Vector3(currentPos.x + (hspd * Time.deltaTime), currentPos.y + (vspd * Time.deltaTime), currentPos.y+ 0.5f);
-            transform.position = newPos;
+            if (!isDead) {
+                transform.position = newPos;
+            }
+            
 
              
 
@@ -135,6 +160,8 @@ public class PlayerController : NetworkBehaviour {
         } else {
             gameObject.GetComponent<PlayerController>().enabled = false;
             cam.enabled = false;
+            canvasRef.enabled = false;
+            gameObject.GetComponent<facingScript>().enabled = false;
         }
 
         if (Input.GetMouseButtonDown(0)) {
@@ -156,6 +183,15 @@ public class PlayerController : NetworkBehaviour {
             }
         }
 
+        if (Input.GetKey(KeyCode.Delete)) {
+            if (isServer) {
+                //CmdDie();
+                RpcDie();
+
+               
+            }
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -163,10 +199,24 @@ public class PlayerController : NetworkBehaviour {
             Debug.Log("should pick up stone");
 
             if (collision.gameObject.GetComponent<curlingStone>().isShot) {
-
-                StartCoroutine(respawn());
-                    CmdDie();
+                if (collision.gameObject.GetComponent<curlingStone>().owner != null) {
+                    if (isServer) {
+                        GameObject enemy = collision.gameObject.GetComponent<curlingStone>().owner;
+                        string enemyID = enemy.name;
+                        GameManage.players[enemyID].kills += 1;
+                    }
+                    
+                    //enemy.GetComponent<PlayerController>().addKill();
+                }
+                if (isServer) {
+                    //CmdDie();
+                    RpcDie();
+                    
                     return;
+                }
+                
+                    
+                    
                 
                 
                
@@ -189,8 +239,40 @@ public class PlayerController : NetworkBehaviour {
         CmdRespawn();
     }
 
-    
+    void addKill() {
+        
+            CmdAddKill();
+        
+    }
+    [Command]
+    void CmdSpload() {
+        
+        foreach(Sprite spr in _gibSpload.gibs) {
+            GameObject o = new GameObject();
+            o.transform.position = gameObject.transform.position;
+            o.AddComponent<SpriteRenderer>();
+            o.GetComponent<SpriteRenderer>().sprite = spr;
+
+            o.AddComponent<Rigidbody2D>();
+            float rx = UnityEngine.Random.Range(-5,5);
+            float ry = UnityEngine.Random.Range(-5,5);
+            Vector2 force = new Vector2(0.2f, UnityEngine.Random.Range(0, 360));
+            o.GetComponent<Rigidbody2D>().gravityScale = 0;
+            o.GetComponent<Rigidbody2D>().drag = 2f;
+            o.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+            
+
+            NetworkServer.Spawn(o);
+        }
+    }
+    [Command]
+    public void CmdResetSpawn(Vector3 pos) {
+        gameObject.transform.position = pos;
+    }
+    [Command]
     void CmdRespawn() {
+        RpcRespawn();
+        /*
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
         Debug.Log("RESPAWN");
         NetworkConnection refe = gameObject.GetComponent<NetworkBehaviour>().connectionToClient;
@@ -206,6 +288,9 @@ public class PlayerController : NetworkBehaviour {
 
         //player.GetComponent<PlayerController>().manager = gameObject.GetComponent<GameManage>();
         NetworkServer.ReplacePlayerForConnection(refe, player,true);
+        */
+        
+
     }
     [Command]
     void CmdYeet(float dir) {
@@ -217,8 +302,10 @@ public class PlayerController : NetworkBehaviour {
         
         ball.transform.rotation = Quaternion.Euler(new Vector3(0, 0, dir));
         ball.transform.position += ball.transform.right * 2f;
-        ball.GetComponent<Rigidbody2D>().velocity = ball.transform.right * 20f;
+        //ball.GetComponent<Rigidbody2D>().velocity = ball.transform.right * 20f;
+        ball.GetComponent<Rigidbody2D>().AddForce(ball.transform.right * 2f, ForceMode2D.Impulse);
 
+        
 
         stone.owner = gameObject;
         stone.isShot = true;
@@ -228,7 +315,7 @@ public class PlayerController : NetworkBehaviour {
 
         //RpcYeet();
     }
-  
+    [Command]
     void CmdDie() {
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         isDead = true;
@@ -239,6 +326,11 @@ public class PlayerController : NetworkBehaviour {
         //manager.respawn(gameObject.GetComponent<NetworkBehaviour>().connectionToClient);
         //
 
+    }
+    [Command]
+    void CmdGetKills() {
+        kills = GameManage.players[myNetId].kills;
+        RpcGetKills();
     }
     
     void CmdSetStone() {
@@ -260,9 +352,19 @@ public class PlayerController : NetworkBehaviour {
         RpcSetStoneVisible(vis);
     }
 
+    [Command]
+    void CmdAddKill() {
+        //Debug.Log(gameObject.name.ToString() + " was killed by " + enemy.name.ToString());
+        kills += 1;
+    }
+
     [ClientRpc]
     void RpcDie() {
+        CmdSpload();
+        isDead = true;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        broom.GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(respawn());
     }
     [ClientRpc]
     void RpcSetStoneVisible(bool visible) {
@@ -270,6 +372,27 @@ public class PlayerController : NetworkBehaviour {
             return;
         }
         swingStone.GetComponent<SpriteRenderer>().enabled = visible;
+    }
+    [ClientRpc]
+    void RpcRespawn() {
+        hasBall = false;
+        swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
+        transform.position = new Vector3(-2, -2, 0);
+        GetComponent<PlayerController>().enabled = true;
+        GetComponent<PlayerController>().cam.enabled = true;
+        GetComponent<PlayerController>().isDead = false;
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<NetworkTransform>().enabled = true;
+        GetComponent<CircleCollider2D>().enabled = true;
+        broom.GetComponent<SpriteRenderer>().enabled = true;
+    }
+    [ClientRpc]
+    void RpcGetKills() {
+        killsDisplay.text = kills.ToString();
+    }
+    [ClientRpc]
+    public void RpcResetSpawn(Vector3 pos) {
+        gameObject.transform.position = pos;
     }
 
 
