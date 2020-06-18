@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948541274614848770}
   - component: {fileID: 1612400247053290529}
+  - component: {fileID: 1695125274481214661}
   m_Layer: 0
   m_Name: GibSpload
   m_TagString: Untagged
@@ -54,3 +55,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fc467c6b9012d14baf0fb099090be62, type: 3}
   - {fileID: 21300000, guid: 213e06806e285cb44a7bb3116cae26a1, type: 3}
   - {fileID: 21300000, guid: e51364202f273054798be903069a9399, type: 3}
+--- !u!114 &1695125274481214661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802252595355611423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0

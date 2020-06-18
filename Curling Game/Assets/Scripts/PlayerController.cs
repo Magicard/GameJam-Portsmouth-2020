@@ -84,8 +84,12 @@ public class PlayerController : NetworkBehaviour {
             float acos = Mathf.Cos(d);
             swinger.transform.position = new Vector3(transform.position.x + (acos * 1f), transform.position.y + (asin * 1f ), transform.position.z);
             swingStone.transform.position = new Vector3(transform.position.x + (acos * 1f), transform.position.y + (asin * 1f), transform.position.z);
-            swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
-            CmdSetStoneVisible(hasBall);
+            
+                
+                swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
+                CmdSetStoneVisible(hasBall);
+            
+            
 
 
 
@@ -186,6 +190,7 @@ public class PlayerController : NetworkBehaviour {
         if (Input.GetKey(KeyCode.Delete)) {
             if (isServer) {
                 //CmdDie();
+                CmdSpload();
                 RpcDie();
 
                
@@ -210,9 +215,35 @@ public class PlayerController : NetworkBehaviour {
                 }
                 if (isServer) {
                     //CmdDie();
+
+                    if (hasBall) {
+                        hasBall = false;
+                        
+
+                        GameObject ball = Instantiate(ballPrefab, transform.position, Quaternion.identity);
+                        curlingStone stone = ball.GetComponent<curlingStone>();
+
+                        
+                        
+
+
+
+                        stone.owner = null;
+                        stone.isShot = false;
+
+
+                        NetworkServer.Spawn(ball);
+                        
+                        
+                    }
+
+                    swingStone.GetComponent<SpriteRenderer>().enabled = false;
+                    CmdSpload();
                     RpcDie();
-                    
                     return;
+
+
+                   
                 }
                 
                     
@@ -221,10 +252,13 @@ public class PlayerController : NetworkBehaviour {
                 
                
             }
-            
+
+            if (!hasBall) {
                 CmdSetStone();
                 //hasBall = true;
                 CmdDestroyBall(collision.gameObject);
+            }
+                
             
             
 
@@ -248,6 +282,7 @@ public class PlayerController : NetworkBehaviour {
     void CmdSpload() {
         
         foreach(Sprite spr in _gibSpload.gibs) {
+            /*
             GameObject o = new GameObject();
             o.transform.position = gameObject.transform.position;
             o.AddComponent<SpriteRenderer>();
@@ -263,7 +298,12 @@ public class PlayerController : NetworkBehaviour {
             
 
             NetworkServer.Spawn(o);
+            */
+            
         }
+        GameObject o = Instantiate(_gibSpload.gameObject, transform.position, Quaternion.identity);
+        NetworkServer.Spawn(o);
+
     }
     [Command]
     public void CmdResetSpawn(Vector3 pos) {
@@ -360,8 +400,10 @@ public class PlayerController : NetworkBehaviour {
 
     [ClientRpc]
     void RpcDie() {
-        CmdSpload();
+        //
         isDead = true;
+
+        swingStone.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         broom.GetComponent<SpriteRenderer>().enabled = false;
         StartCoroutine(respawn());

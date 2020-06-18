@@ -121,16 +121,17 @@ namespace Mirror
             // server / client status message
             if (NetworkServer.active)
             {
-                GUILayout.Label("Server: active. Transport: " + Transport.activeTransport);
+                //GUILayout.Label("Server: active. Transport: " + Transport.activeTransport);
             }
             if (NetworkClient.isConnected)
             {
-                GUILayout.Label("Client: address=" + manager.networkAddress);
+                //GUILayout.Label("Client: address=" + manager.networkAddress);
             }
         }
 
         void StopButtons()
         {
+            /*
             // stop host if host mode
             if (NetworkServer.active && NetworkClient.isConnected)
             {
@@ -155,6 +156,7 @@ namespace Mirror
                     manager.StopServer();
                 }
             }
+            */
         }
     }
 }
