@@ -13,11 +13,21 @@ public class GameManage : NetworkBehaviour
     public static Dictionary<string,PlayerController> players = new Dictionary<string, PlayerController>();
     public static  List<Transform> spawnPoints = new List<Transform>();
 
+    public  static GameObject gibSpload;
+    public   GameObject _gibSpload;
+
 
     // Start is called before the first frame update
+    private void Awake() {
+        gibSpload = _gibSpload;
+    }
     public override void OnStartServer() {
+        
         base.OnStartServer();
-        //StartCoroutine(spawnObj());
+        if (isServer) {
+            StartCoroutine(spawnObj());
+        }
+       
     }
 
     // Update is called once per frame
@@ -65,6 +75,11 @@ public class GameManage : NetworkBehaviour
 
 
     }
+
+    public static void spawnGibs(Vector3 pos) {
+        GameObject o = Instantiate(gibSpload, pos, Quaternion.identity);
+        NetworkServer.Spawn(o);
+    }
     public static void  sendboard() {
         string s = "";
         foreach (KeyValuePair<string, PlayerController> kvs in players) {
@@ -93,8 +108,8 @@ public class GameManage : NetworkBehaviour
     }
 
     IEnumerator spawnObj() {
-        yield return new WaitForSeconds(2f);
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        yield return new WaitForSeconds(5f);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(2, 0, 0), Quaternion.identity);
         NetworkServer.Spawn(ball);
         StartCoroutine(spawnObj());
         //CmdSpawnObj();

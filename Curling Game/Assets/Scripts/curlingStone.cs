@@ -33,7 +33,7 @@ public class curlingStone : NetworkBehaviour {
             if(collision.gameObject.tag == "playerobj") {
                 if (isShot) {
                     Debug.Log("kill" + collision.gameObject.name.ToString());
-
+                    GameManage.spawnGibs(collision.gameObject.transform.position);
                     collision.gameObject.GetComponent<PlayerController>().isDead = true;
                     collision.gameObject.GetComponent<PlayerController>().hasBall = false;
                     collision.gameObject.transform.position = new Vector3(-2, -2, 0); //hmm
