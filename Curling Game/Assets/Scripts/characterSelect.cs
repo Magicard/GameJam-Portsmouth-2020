@@ -13,8 +13,9 @@ public class characterSelect : MonoBehaviour
 
     public GameObject playerCharacter;
 
-    public int spriteIndex;
-    public int counter= 3;
+    public  int spriteIndex;
+    public static int spriteIndex2;
+    public  int counter= 3;
 
     // Start is called before the first frame update
     void Start()
@@ -102,5 +103,7 @@ public class characterSelect : MonoBehaviour
         }
 
         playerCharacter.GetComponent<SpriteRenderer>().sprite = characters[spriteIndex];
+        spriteIndex2 = spriteIndex;
+        Debug.Log(spriteIndex2);
     }
 }
