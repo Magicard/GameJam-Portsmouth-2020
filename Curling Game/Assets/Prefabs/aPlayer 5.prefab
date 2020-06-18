@@ -1360,6 +1360,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: aPlayer 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6568009816160037438, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: far clip plane
+      value: 4118.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568009816160037438, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6738301070509220528, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: m_Constraints
