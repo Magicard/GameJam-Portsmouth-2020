@@ -37,8 +37,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   transports:
-  - {fileID: 7027779245887342218}
-  - {fileID: 7027779245887342219}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &2458618232810432956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,7 +133,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetworkManager Normal
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 87bbe1c701fdb7140aef8ee3b186485c, type: 3}
 --- !u!1 &7027779245887342217 stripped
 GameObject:
@@ -141,27 +142,3 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2458618232810432956}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7027779245887342218 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4871042930968407862, guid: 87bbe1c701fdb7140aef8ee3b186485c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2458618232810432956}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027779245887342217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7027779245887342219 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4871042930968407863, guid: 87bbe1c701fdb7140aef8ee3b186485c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2458618232810432956}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027779245887342217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f039183eda8945448b822a77e2a9d0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

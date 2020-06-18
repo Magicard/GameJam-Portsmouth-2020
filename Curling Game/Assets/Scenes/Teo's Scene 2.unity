@@ -3409,11 +3409,11 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
---- !u!114 &839039320
+--- !u!114 &839039320 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2228010554159472538, guid: 54be48431db07e842bbd524a7c94db32,
+    type: 3}
+  m_PrefabInstance: {fileID: 8580020720647796455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839039318}
   m_Enabled: 1
@@ -3421,36 +3421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnClientConnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientDataReceived:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientError:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientDisconnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerConnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerDataReceived:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerError:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerDisconnected:
-    m_PersistentCalls:
-      m_Calls: []
-  port: 7777
-  NoDelay: 1
-  serverMaxMessageSize: 16384
-  serverMaxReceivesPerTick: 10000
-  clientMaxMessageSize: 16384
-  clientMaxReceivesPerTick: 1000
 --- !u!114 &839039322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3487,7 +3457,6 @@ MonoBehaviour:
   - {fileID: 1150293064181092216, guid: 39e512ab80420cf4a98f01d1893f61e7, type: 3}
   - {fileID: 1150293064181092216, guid: 07e54fb6dd573e84a8af6bbc2f237c3c, type: 3}
   - {fileID: 1150293064181092216, guid: f18060b32e4f58d4990b939d86b85145, type: 3}
-  spriteCounter: 0
   yes:
   - {fileID: 21300000, guid: 394675061938b944ba6112e24bc8710f, type: 3}
   - {fileID: 21300000, guid: d3a985dd6bdb8364fa4b5a88f861f66a, type: 3}

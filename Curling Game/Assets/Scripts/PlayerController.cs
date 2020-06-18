@@ -120,7 +120,7 @@ public class PlayerController : NetworkBehaviour {
                 cos = Mathf.Cos(d);
 
                 vel += 0.05f;
-                vel -= (diff*17);
+                //vel -= (diff*17);
                 vel = (vel > maxVel) ? maxVel : vel;
 
 
@@ -203,67 +203,7 @@ public class PlayerController : NetworkBehaviour {
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.tag == "curlingStone" && !isDead) {
-            Debug.Log("should pick up stone");
-
-            if (collision.gameObject.GetComponent<curlingStone>().isShot) {
-                Debug.Log(collision.gameObject.GetComponent<curlingStone>().isShot);
-                if (collision.gameObject.GetComponent<curlingStone>().owner != null) {
-                    /*
-                    if (isServer) {
-                        GameObject enemy = collision.gameObject.GetComponent<curlingStone>().owner;
-                        string enemyID = enemy.GetComponent<PlayerController>().IDName;
-                        GameManage.players[enemyID].kills += 1;
-                    }
-                    */
-
-                    //enemy.GetComponent<PlayerController>().addKill();
-
-                    /*
-                    if (hasBall) {
-                        hasBall = false;
-
-                        GameObject ball = Instantiate(ballPrefab, transform.position, Quaternion.identity);
-                        curlingStone stone = ball.GetComponent<curlingStone>();
-
-                        stone.owner = null;
-                        stone.isShot = false;
-
-                        NetworkServer.Spawn(ball);
-                    }
-                    */
-
-                    
-
-                }
-                
-                    /*
-                    Debug.Log("Should Die");
-                    swingStone.GetComponent<SpriteRenderer>().enabled = false;
-                    CmdSpload();
-                    CmdDie();
-
-                    return;
-                    */
-                
-                
-
-
-            }
-
-            if (!hasBall && !isDead) {
-                //CmdSetStone();
-                //hasBall = true;
-                //CmdDestroyBall(collision.gameObject);
-            }
-                
-            
-            
-
-        }
-        
-    }
+    
     [Client]
     IEnumerator respawn() {
         Debug.Log("Timer Started");

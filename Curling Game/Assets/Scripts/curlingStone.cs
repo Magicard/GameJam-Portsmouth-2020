@@ -46,7 +46,7 @@ public class curlingStone : NetworkBehaviour {
             }
         }
 
-        if (!collision.gameObject.GetComponent<PlayerController>().hasBall && !collision.gameObject.GetComponent<PlayerController>().isDead && collision.gameObject.tag == "playerobj") {
+        if (!collision.gameObject.GetComponent<PlayerController>().hasBall && !collision.gameObject.GetComponent<PlayerController>().isDead && collision.gameObject.tag == "playerobj" && !isShot) {
             collision.gameObject.GetComponent<PlayerController>().hasBall = true;
             collision.gameObject.GetComponent<PlayerController>().RpcSetStone();
             collision.gameObject.GetComponent<PlayerController>().RpcSetStoneVisible(true);
