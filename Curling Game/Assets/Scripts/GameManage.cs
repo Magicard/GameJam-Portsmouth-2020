@@ -51,16 +51,7 @@ public class GameManage : NetworkBehaviour
             }
         }
             */
-        string s = "";
-        foreach (KeyValuePair<string, PlayerController> kvs in players) {
-            s+= kvs.Value.customName + " "+ kvs.Value.kills.ToString() + ",";
-            
-        }
-
-        foreach (KeyValuePair<string, PlayerController> kvs in players) {
-            kvs.Value.RpcGetString(s);
-
-        }
+        
 
         foreach (KeyValuePair<string, PlayerController> kv in players) {
 
@@ -74,7 +65,18 @@ public class GameManage : NetworkBehaviour
 
 
     }
+    public static void  sendboard() {
+        string s = "";
+        foreach (KeyValuePair<string, PlayerController> kvs in players) {
+            s += kvs.Value.customName + " " + kvs.Value.kills.ToString() + ",";
 
+        }
+
+        foreach (KeyValuePair<string, PlayerController> kvs in players) {
+            kvs.Value.RpcGetString(s);
+
+        }
+    }
     void resetGame() {
         foreach (KeyValuePair<string, PlayerController> kv in players) {
             kv.Value.kills = 0;
@@ -83,6 +85,7 @@ public class GameManage : NetworkBehaviour
 
     public static void addPlayer(string _id, PlayerController _player) {
         players.Add(_id, _player);
+        GameManage.sendboard();
     }
 
     public static void addSpawn(Transform trans) {

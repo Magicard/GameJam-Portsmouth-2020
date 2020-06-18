@@ -62,6 +62,7 @@ public class PlayerController : NetworkBehaviour {
         name = "player" + _id;
         myNetId = name;
         IDName = "player" + _id;
+        CmdGetScoresPls();
     }
 
     public override void OnStartServer() {
@@ -73,6 +74,7 @@ public class PlayerController : NetworkBehaviour {
         //CmdSetIDName(IDName);
 
         GameManage.addPlayer(IDName, this);
+        GameManage.sendboard();
     }
     // Update is called once per frame
     private void Update() {
@@ -238,6 +240,10 @@ public class PlayerController : NetworkBehaviour {
     [Command]
     public void CmdResetSpawn(Vector3 pos) {
         gameObject.transform.position = pos;
+    }
+    [Command]
+    void CmdGetScoresPls() {
+        GameManage.sendboard();
     }
     [Command]
     void CmdRespawn() {
