@@ -291,14 +291,14 @@ RectTransform:
   m_GameObject: {fileID: 3079143760578905890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.750228, y: 1.750228, z: 1.750228}
+  m_LocalScale: {x: 1.7502282, y: 1.7502282, z: 1.7502282}
   m_Children: []
   m_Father: {fileID: 5450291634672982756}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: 0}
+  m_AnchoredPosition: {x: -1.0002441, y: -0.00018310547}
   m_SizeDelta: {x: 582.65, y: 354.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7446478682572274871
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player 1 Wins!
+  m_Text: 
 --- !u!1 &3273418051544719803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: help
 --- !u!1 &8210171073277590411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,6 +1600,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3802252595355611423, guid: 7193b95d66cdc364b895333fefbb889b,
         type: 3}
+    - target: {fileID: 437035994445693222, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: wintxt
+      value: 
+      objectReference: {fileID: 3637303733722355128}
+    - target: {fileID: 437035994445693222, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
+        type: 3}
+      propertyPath: leaderBoard
+      value: 
+      objectReference: {fileID: 8521007427631610872}
     - target: {fileID: 794593686562768440, guid: 3fef7f798cfd44d45a69104c4e99b4cc,
         type: 3}
       propertyPath: sceneId

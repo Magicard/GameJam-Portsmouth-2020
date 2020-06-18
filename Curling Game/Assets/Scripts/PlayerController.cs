@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour {
     public Text killsDisplay;
+    public Text wintxt;
     public Text nameDisplay;
     public GameObject broom;
     public Canvas canvasRef;
@@ -216,6 +217,11 @@ public class PlayerController : NetworkBehaviour {
         CmdRespawn();
     }
 
+    IEnumerator setTextToNothing() {
+        yield return new WaitForSeconds(4f);
+        wintxt.text = "";
+    }
+
     void addKill() {
         
             CmdAddKill();
@@ -407,8 +413,10 @@ public class PlayerController : NetworkBehaviour {
         killsDisplay.text = kills.ToString();
     }
     [ClientRpc]
-    public void RpcResetSpawn(Vector3 pos) {
+    public void RpcResetSpawn(Vector3 pos,string win) {
         gameObject.transform.position = pos;
+        wintxt.text = win;
+        StartCoroutine(setTextToNothing());
     }
 
    
@@ -429,6 +437,15 @@ public class PlayerController : NetworkBehaviour {
         List<string> lst =  str.Split(',').ToList<String>();
         for (int i = 0; i < lst.Count; i++) {
             leaderBoard.textList[i].text = lst[i];
+        }
+    }
+    [ClientRpc]
+    public void RpcGetString(string s) {
+        Debug.Log("got " + s);
+        List<string> str = s.Split(',').ToList<string>();
+
+        for(int i = 0; i < leaderBoard.textList.Count; i++) {
+            leaderBoard.textList[i].text = str[i];
         }
     }
 
