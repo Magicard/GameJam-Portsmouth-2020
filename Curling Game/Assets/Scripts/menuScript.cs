@@ -103,13 +103,13 @@ public class menuScript : MonoBehaviour
             switch (counter)
             {
                 case 0:
-                    SceneManager.LoadScene(1);
-                    break;
-                case 1:
                     SceneManager.LoadScene(2);
                     break;
-                case 2:
+                case 1:
                     SceneManager.LoadScene(3);
+                    break;
+                case 2:
+                    SceneManager.LoadScene(4);
                     break;
                 case 3:
                     Application.Quit();
