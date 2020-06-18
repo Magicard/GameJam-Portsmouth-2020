@@ -30,6 +30,7 @@ public class soundManager : MonoBehaviour
             shoot.Play();
             if (gameObject.GetComponent<PlayerController>().hasBall == true)
             {
+
                 Debug.Log("shouldplay");
                 
             }

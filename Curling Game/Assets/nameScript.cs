@@ -7,20 +7,22 @@ using UnityEngine.UI;
 public class nameScript : MonoBehaviour
 {
 
-    public static string name;
+    public static string nam;
+    public Text txt_Input;
     // Start is called before the first frame update
     void Start()
     {
-
+        //txt_Input = gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Text txt_Input = GameObject.Find("pee").GetComponent<Text>();
+        
 
         string ObjectsText = txt_Input.text;
         Debug.Log(ObjectsText);
-        name = ObjectsText;
+        nam = ObjectsText;
+        Debug.Log(nam);
     }
 }

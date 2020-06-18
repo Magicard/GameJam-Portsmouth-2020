@@ -13,7 +13,7 @@ public class customNetworkManager : NetworkManager
         playerPrefab = players[0];
        
         GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
-        player.GetComponent<PlayerController>().customName = nameScript.name;
+        //player.GetComponent<PlayerController>().customName = nameScript.nam;
         //player.GetComponent<PlayerController>().manager = GM;
         //characterSelect nameList = list.GetComponent<characterSelect>();
         //player.GetComponent<SpriteRenderer>().sprite = yes[spriteCounter];

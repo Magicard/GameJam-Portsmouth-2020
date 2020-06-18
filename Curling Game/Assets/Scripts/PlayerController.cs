@@ -29,7 +29,7 @@ public class PlayerController : NetworkBehaviour {
     float sin = 0;
     float cos = 0;
     public string myNetId;
-    public string customName = "thisiscustomname";
+    
 
     [SyncVar]
     public Boolean hasBall = false;
@@ -39,8 +39,10 @@ public class PlayerController : NetworkBehaviour {
     public int kills = 0;
     [SyncVar]
     public string IDName;
-   
-    
+    [SyncVar]
+    public string customName = "thisiscustomname";
+
+
 
 
 
@@ -62,6 +64,9 @@ public class PlayerController : NetworkBehaviour {
         name = "player" + _id;
         myNetId = name;
         IDName = "player" + _id;
+        
+        customName = nameScript.nam;
+        CmdSetName(customName);
         CmdGetScoresPls();
     }
 
@@ -72,9 +77,11 @@ public class PlayerController : NetworkBehaviour {
         myNetId = name;
         IDName = "player" + _id;
         //CmdSetIDName(IDName);
+        
 
         GameManage.addPlayer(IDName, this);
         GameManage.sendboard();
+        RpcSetName(customName);
     }
     // Update is called once per frame
     private void Update() {
@@ -308,6 +315,11 @@ public class PlayerController : NetworkBehaviour {
         }
     }
     [Command]
+    void CmdSetName(string n) {
+        customName = n;
+        RpcSetName(n);
+    }
+    [Command]
     void CmdYeet(float dir) {
         hasBall = false;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
@@ -454,6 +466,11 @@ public class PlayerController : NetworkBehaviour {
             leaderBoard.textList[i].text = str[i];
         }
     }
+    [ClientRpc]
+     void RpcSetName(string N) {
+        customName = N;
+    }
+
 
 
 
