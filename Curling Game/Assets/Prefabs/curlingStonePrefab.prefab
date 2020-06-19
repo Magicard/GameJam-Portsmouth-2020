@@ -172,6 +172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  stonePrefabref: {fileID: 1521318749908315725, guid: 0e1be75bd10d91b469daefdd606dd33a,
+    type: 3}
   owner: {fileID: 0}
   isShot: 0
 --- !u!114 &-791504698168943424

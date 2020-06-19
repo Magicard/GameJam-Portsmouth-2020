@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class curlingStone : NetworkBehaviour {
+    public GameObject stonePrefabref;
+
     [SyncVar]
     public GameObject owner;
     [SyncVar]
@@ -13,6 +15,9 @@ public class curlingStone : NetworkBehaviour {
     // Start is called before the first frame update
 
     void Start() {
+
+        
+
         if (isServer) {
             GetComponent<Rigidbody2D>().simulated = true;
         }
@@ -31,18 +36,29 @@ public class curlingStone : NetworkBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (isServer) {
             if(collision.gameObject.tag == "playerobj") {
-                if (isShot) {
-                    Debug.Log("kill" + collision.gameObject.name.ToString());
+                if (isShot && collision.gameObject.GetComponent<PlayerController>().isDead == false) {
+
+                    if (collision.gameObject.GetComponent<PlayerController>().hasBall) {
+                        GameObject b = Instantiate(stonePrefabref.GetComponent<stoneRefScript>().spawnRef, collision.gameObject.transform.position, Quaternion.identity);
+                        b.GetComponent<curlingStone>().isShot = false;
+                        b.GetComponent<curlingStone>().owner = null;
+                        NetworkServer.Spawn(b);
+                    }
+
+                        Debug.Log("kill" + collision.gameObject.name.ToString());
                     GameManage.spawnGibs(collision.gameObject.transform.position);
                     collision.gameObject.GetComponent<PlayerController>().isDead = true;
                     collision.gameObject.GetComponent<PlayerController>().hasBall = false;
-                    collision.gameObject.transform.position = new Vector3(-2, -2, 0); //hmm
+                    //collision.gameObject.transform.position = new Vector3(-2, -2, 0); //hmm
                     collision.gameObject.GetComponent<PlayerController>().swingStone.GetComponent<SpriteRenderer>().enabled = false;
                     collision.gameObject.GetComponent<PlayerController>().gameObject.GetComponent<SpriteRenderer>().enabled = false;
                     collision.gameObject.GetComponent<PlayerController>().broom.GetComponent<SpriteRenderer>().enabled = false;
 
+                    
+
                     GameManage.players[collision.gameObject.GetComponent<PlayerController>().IDName].RpcDie();
                     GameManage.players[owner.GetComponent<PlayerController>().IDName].kills++;
+                    //GameManage.players[owner.GetComponent<PlayerController>().IDName].gameObject.transform.position = new Vector3(0,0,0);
                     GameManage.sendboard();
 
                 }

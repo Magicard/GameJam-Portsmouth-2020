@@ -70,6 +70,21 @@ public class PlayerController : NetworkBehaviour {
         CmdGetScoresPls();
     }
 
+    public override void OnStopServer() {
+        GameManage.players.Remove(IDName);
+        NetworkServer.DestroyPlayerForConnection(gameObject.GetComponent<NetworkIdentity>().connectionToClient);
+        NetworkServer.DestroyPlayerForConnection(gameObject.GetComponent<NetworkIdentity>().connectionToServer);
+        NetworkServer.RemoveConnection(gameObject.GetComponent<NetworkIdentity>().connectionToClient.connectionId);
+        NetworkServer.RemoveConnection(gameObject.GetComponent<NetworkIdentity>().connectionToServer.connectionId);
+
+    }
+
+
+
+
+
+
+    
     public override void OnStartServer() {
         base.OnStartServer();
         string _id = gameObject.GetComponent<NetworkIdentity>().netId.ToString();
@@ -253,10 +268,17 @@ public class PlayerController : NetworkBehaviour {
         GameManage.sendboard();
     }
     [Command]
+    void CmdRemoveSelf() {
+        
+
+
+
+    }
+    [Command]
     void CmdRespawn() {
         isDead = false;
         swingStone.GetComponent<SpriteRenderer>().enabled = hasBall;
-        transform.position = new Vector3(-2, -2, 0);
+        transform.position = new Vector3(100, 100, 0);
         broom.GetComponent<SpriteRenderer>().enabled = true;
         RpcRespawn();
         /*

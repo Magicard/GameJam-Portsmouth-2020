@@ -16,6 +16,8 @@ public class GameManage : NetworkBehaviour
     public  static GameObject gibSpload;
     public   GameObject _gibSpload;
 
+    public int balls = 0;
+
 
     // Start is called before the first frame update
     private void Awake() {
@@ -108,11 +110,16 @@ public class GameManage : NetworkBehaviour
     }
 
     IEnumerator spawnObj() {
-        yield return new WaitForSeconds(5f);
-        GameObject ball = Instantiate(ballPrefab, new Vector3(2, 0, 0), Quaternion.identity);
-        NetworkServer.Spawn(ball);
-        StartCoroutine(spawnObj());
-        //CmdSpawnObj();
+
+        yield return new WaitForSeconds(15f);
+        if(balls < 2) {
+            balls++;
+            GameObject ball = Instantiate(ballPrefab, new Vector3(2, 0, 0), Quaternion.identity);
+            NetworkServer.Spawn(ball);
+            StartCoroutine(spawnObj());
+            //CmdSpawnObj();
+        }
+
     }
 
     

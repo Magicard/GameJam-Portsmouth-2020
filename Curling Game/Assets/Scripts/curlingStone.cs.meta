@@ -3,7 +3,10 @@ guid: bfd63b7f6eb5da849a38bfc023a4abdf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - stonePrefab: {fileID: 625051116760112876, guid: 2f72e80b88e57814596745176fb9081c,
+      type: 3}
+  - owner: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

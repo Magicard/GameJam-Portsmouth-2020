@@ -18,6 +18,8 @@ public class gibSpload : MonoBehaviour
             o.GetComponent<SpriteRenderer>().sprite = spr;
 
             o.AddComponent<Rigidbody2D>();
+            o.AddComponent<destroyaftertime>();
+
             float rx = UnityEngine.Random.Range(-5,5);
             float ry = UnityEngine.Random.Range(-5,5);
             //Vector2 force = new Vector2(0.2f, UnityEngine.Random.Range(0, 360));

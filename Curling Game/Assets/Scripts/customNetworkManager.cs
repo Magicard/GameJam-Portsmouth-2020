@@ -19,4 +19,13 @@ public class customNetworkManager : NetworkManager
         //player.GetComponent<SpriteRenderer>().sprite = yes[spriteCounter];
         NetworkServer.AddPlayerForConnection(conn, player);
     }
+
+    public override void OnServerDisconnect(NetworkConnection conn) {
+        base.OnServerDisconnect(conn);
+        
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn) {
+        base.OnClientDisconnect(conn);
+    }
 }
